@@ -12,15 +12,39 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("jnidemo");
     }
 
+
+    public void createArray(int[] arrays) {
+        for (int i = 0; i < arrays.length; i++) {
+            arrays[i] = (int) (Math.random() * 100 + 1);
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         TextView tv = (TextView) findViewById(R.id.tv);
-        String stringFromC = new JniUtils().getStringFromC();
-        if (stringFromC != null) {
-            tv.setText(stringFromC);
-        }
+        final JniUtils jniUtils = new JniUtils();
+        assert tv != null;
+        tv.setText(jniUtils.getStringFromC());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                final int[] array = new int[100000];
+                createArray(array);
+//        jniUtils.printArrays(array);
+                long start = System.currentTimeMillis();
+//        jniUtils.intsertSorctFromJava(ints);//Java 排序
+                jniUtils.insertSort(array);//C 排序
+                long end = System.currentTimeMillis();
+
+                System.out.println("排序后..." + "耗时: " + (end - start));
+//        jniUtils.printArrays(array);
+            }
+        }).start();
     }
 }

@@ -13,7 +13,15 @@ extern "C" {
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_relicemxd_jnidemo_ndk_JniUtils_getStringFromC
-  (JNIEnv *, jclass);
+        (JNIEnv *, jobject);
+
+/*
+ * Class:     com_relicemxd_jnidemo_ndk_JniUtils
+ * Method:    insertSort
+ * Signature: ([I)V
+ */
+JNIEXPORT void JNICALL Java_com_relicemxd_jnidemo_ndk_JniUtils_insertSort
+        (JNIEnv *, jobject, jintArray);
 
 #ifdef __cplusplus
 }
